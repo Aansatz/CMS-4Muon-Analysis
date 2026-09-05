@@ -51,24 +51,24 @@ This section contains internal reference workflows for HPC tunneling and Google 
    ```bash
    cd deydaa_Zmumu
 
-2)Submit the Jupyter notebook job:
+1)Submit the Jupyter notebook job:
 
 sbatch jupyter-notebook.sh
 
-3)Check the queue status (wait until the status changes to R for Running):
+2)Check the queue status (wait until the status changes to R for Running):
 
 squeue -u deydaa10
 
 
-4)Generate the connection information (replace 176455 with your actual Job ID):
+3)Generate the connection information (replace 176455 with your actual Job ID):
 
 bash show-connection-info-176455.sh
 
-5)Open a NEW local terminal tab and establish the SSH tunnel using the provided command (example using port 9999 and node cn01):
+4)Open a NEW local terminal tab and establish the SSH tunnel using the provided command (example using port 9999 and node cn01):
 
 ssh -p 22022 -N -L 9999:cn01:9999 deydaa10@grid.compecta.com
 
-6)Open your local browser and paste the generated token link:
+5)Open your local browser and paste the generated token link:
 
 http://127.0.0.1:9999/tree?token=...
 
@@ -90,10 +90,3 @@ drive.mount('/content/drive')
 <summary><b>🛠️ Developer Notes (Internal Access Workflows)</b></summary>
 <br>
 This section contains internal reference workflows for HPC tunneling and Google Colab integration.
-
-### 1. HPC (Compecta) SSH Tunneling via WSL
-*Based on the internal Slurm job scheduling system.*
-
-1) Navigate to the active working directory:
-   ```bash
-   cd deydaa_Zmumu

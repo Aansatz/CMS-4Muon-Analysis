@@ -86,3 +86,14 @@ drive.mount('/content/drive')
 
 # 3. Install required HEP libraries silently
 %pip install uproot awkward mplhep scipy -q
+<details>
+<summary><b>🛠️ Developer Notes (Internal Access Workflows)</b></summary>
+<br>
+This section contains internal reference workflows for HPC tunneling and Google Colab integration.
+
+### 1. HPC (Compecta) SSH Tunneling via WSL
+*Based on the internal Slurm job scheduling system.*
+
+1) Navigate to the active working directory:
+   ```bash
+   cd deydaa_Zmumu

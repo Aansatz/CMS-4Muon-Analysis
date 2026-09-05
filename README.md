@@ -34,49 +34,65 @@ The analysis relies on standard scientific computing and specialized HEP librari
 ### 1. Clone the Repository
 To get started, clone this repository to your local machine:
 ```bash
-git clone [https://github.com/Aansatz/CMS-4Muon-Analysis.git](https://github.com/Aansatz/CMS-4Muon-Analysis.git)
+git clone https://github.com/Aansatz/CMS-4Muon-Analysis.git
 cd CMS-4Muon-Analysis
+```
+
+### 2. Install Dependencies
+Ensure you have the required packages installed in your environment. You can install them via pip:
+```bash
+pip install numpy scipy matplotlib uproot awkward mplhep
+```
+
+### 3. Run the Analysis
+Launch Jupyter Notebook in your terminal:
+```bash
+jupyter notebook deydaa10competta.ipynb
+```
+Open the notebook in your browser and run the cells sequentially to parse the data, construct the invariant mass spectrum, and visualize the final Gaussian fit over the exponential background.
 
 <details>
 <summary><b>🛠️ Developer Notes (Internal Access Workflows)</b></summary>
-
 <br>
 
 This section contains internal reference workflows for HPC tunneling and Google Colab integration.
 
-### 1. HPC (Compecta) SSH Tunneling via MobaXterm/WSL
+### 1. HPC (Compecta) SSH Tunneling via WSL
 *Based on the internal Slurm job scheduling system.*
 
-1. Navigate to the active working directory:
+1) Navigate to the active working directory:
    ```bash
    cd deydaa_Zmumu
+   ```
 
-1)Submit the Jupyter notebook job:
+2) Submit the Jupyter notebook job:
+   ```bash
+   sbatch jupyter-notebook.sh
+   ```
 
-sbatch jupyter-notebook.sh
+3) Check the queue status (wait until the status changes to R for Running):
+   ```bash
+   squeue -u deydaa10
+   ```
 
-2)Check the queue status (wait until the status changes to R for Running):
+4) Generate the connection information (replace 176455 with your actual Job ID):
+   ```bash
+   bash show-connection-info-176455.sh
+   ```
 
-squeue -u deydaa10
+5) Open a NEW local terminal tab and establish the SSH tunnel:
+   ```bash
+   ssh -p 22022 -N -L 9999:cn01:9999 deydaa10@grid.compecta.com
+   ```
 
+6) Open your local browser and paste the generated token link:
+   `[http://127.0.0.1:9999/tree?token=](http://127.0.0.1:9999/tree?token=)...`
 
-3)Generate the connection information (replace 176455 with your actual Job ID):
-
-bash show-connection-info-176455.sh
-
-4)Open a NEW local terminal tab and establish the SSH tunnel using the provided command (example using port 9999 and node cn01):
-
-ssh -p 22022 -N -L 9999:cn01:9999 deydaa10@grid.compecta.com
-
-5)Open your local browser and paste the generated token link:
-
-http://127.0.0.1:9999/tree?token=...
-
-2. Google Colab & Google Drive Integration
-For quick testing environments where local WSL is unavailable.
+### 2. Google Colab & Google Drive Integration
+*For quick testing environments where local WSL is unavailable.*
 
 Mount your Google Drive to access shared datasets:
-
+```python
 # 1. Mount Google Drive
 from google.colab import drive
 drive.mount('/content/drive')
@@ -86,7 +102,5 @@ drive.mount('/content/drive')
 
 # 3. Install required HEP libraries silently
 %pip install uproot awkward mplhep scipy -q
-<details>
-<summary><b>🛠️ Developer Notes (Internal Access Workflows)</b></summary>
-<br>
-This section contains internal reference workflows for HPC tunneling and Google Colab integration.
+```
+</details>
